@@ -1,0 +1,245 @@
+ROOM-ETechnical Design DocumentAligned to the Product Requirements Document and Design Document
+Document goal
+Define the technical architecture, engineering standards, and delivery plan for a mobile-first version of ROOM-E optimized for App Store launch.
+Primary product scope
+House management for roommates: tasks, recurring chores, expenses, split balances, shopping list, chat, polls, AI quick actions, and mobile notifications.
+Primary platform
+iPhone / iOS first, while keeping architectural choices compatible with future Android expansion.
+Source alignment
+This document is derived from the ROOM-E PRD and the ROOM-E design direction so product, UX, and engineering decisions stay consistent.
+Design intent
+Support fast, card-based, highly scannable mobile flows inspired by modern task-management apps and Rappi-style quick-action behavior.
+1. Executive Summary
+ROOM-E should be built as a mobile-first collaboration app that feels fast enough for everyday household use. The technical stack must support short interaction loops, real-time collaboration inside each house, low-latency dashboard refreshes, and highly reliable background behavior for notifications and reminders.
+The recommended v1 architecture is an iOS-first React Native application backed by Firebase services and serverless business logic. This approach is well suited to the current product scope because it supports real-time collaboration, push notifications, simple scaling, and rapid product iteration while preserving a path to future Android support.
+2. Alignment with Existing Product and Design Work
+2.1 Alignment with the Product Requirements Document
+The PRD defines the MVP around houses, tasks, expenses, shopping, chat, and polls. The technical stack below supports each of these as first-class domains.
+The PRD emphasizes simplicity and low friction. The architecture therefore favors managed infrastructure and serverless logic over heavy custom backend complexity.
+The PRD positions ROOM-E as a coordination product, not just a ledger. Real-time updates and notifications are therefore non-optional platform capabilities.
+2.2 Alignment with the Design Document
+The design direction uses cards, quick actions, short forms, and dashboard summaries. Engineering must support partial loading, optimistic updates, and responsive local state.
+The design work emphasizes fast scanning and quick-add actions similar to mobile marketplace patterns. This requires predictable navigation, deep links from notifications, and low-friction entry points.
+The mobile experience should feel native on iPhone, especially for gestures, modals, tabs, notification flows, and loading states.
+3. Product Requirements That Drive Technical Decisions
+Recurring chores need a scheduler and stable state model.
+Shared expenses need accurate split calculation, balance updates, and auditability.
+Chat and polls need real-time synchronization.
+Mobile notifications need background-safe delivery and direct navigation into relevant screens.
+The AI assistant must convert natural language into structured actions without silently writing bad data.
+The home screen must aggregate data from several domains without feeling slow.
+4. Technical Goals and Non-Goals
+4.1 Goals
+Launch a stable iOS-first app suitable for App Store release.
+Keep interaction latency low for frequent daily actions.
+Support real-time household collaboration across multiple users in the same house.
+Preserve design quality under weak networks and temporary offline conditions.
+Enable safe AI-assisted task and expense creation with confirmation before persistence.
+4.2 Non-Goals for v1
+No complex payment processing or banking integration in the first release.
+No heavy analytics dashboard inside the consumer app beyond essential summaries.
+No direct AI autonomy that edits tasks or expenses without an explicit confirmation step.
+5. Recommended Stack
+5.1 Mobile App
+Recommendation: React Native with Expo Router, TypeScript, Zustand or Redux Toolkit for app state, and TanStack Query for network and server-cache orchestration. This combination is fast to build, mature for mobile apps, and strong enough for the interaction patterns already envisioned for ROOM-E.
+Option
+Advantages
+Risks / Trade-offs
+Recommendation
+React Native + Expo
+High iteration speed, good notification support, future Android reuse, strong ecosystem
+Slightly less platform-specific polish than full native
+Recommended for v1
+SwiftUI
+Best native iOS polish and OS integration
+Higher development cost; Android path requires rewrite
+Use only if long-term iOS-only strategy
+Flutter
+Good performance and UI control
+Less direct alignment with some iOS-specific conventions in typical teams
+Acceptable fallback, not first choice
+5.2 Backend and Cloud Services
+Recommendation: Firebase-first backend architecture. The service mix should include Firebase Authentication, Firestore, Cloud Functions, Firebase Cloud Messaging, and optional Firebase Storage for image attachments or receipt scanning later.
+Authentication: Apple Sign-In, email/password, and optional Google sign-in later.
+Database: Firestore for collaborative product data and real-time synchronization.
+Business logic: Cloud Functions for validation, scheduling, balances, notification fan-out, and AI confirmation workflows.
+Push notifications: FCM with APNs for iOS delivery.
+Observability: Crashlytics, Analytics, and custom event logging.
+5.3 AI Integration Layer
+Recommendation: use an LLM through a secure backend integration instead of direct mobile calls. The assistant should transform user requests such as 'Add a cleaning task for Friday for Laura' or 'Log a 60-dollar internet bill split equally among four people' into structured drafts.
+The model returns structured output with intent, normalized fields, missing fields, and confidence.
+The app shows a confirmation sheet before saving the action.
+The backend revalidates the structured payload before writing to the database.
+The assistant supports clarification prompts when required information is missing.
+6. High-Level Architecture
+The recommended architecture is composed of five main layers:
+Mobile presentation layer: screens, cards, forms, tabs, deep links, local UI state.
+Mobile domain layer: task logic, expense flows, notification handling, AI action parsing UI, offline queue.
+Cloud data layer: Firestore collections and document relationships.
+Cloud logic layer: serverless functions for recalculation, scheduling, notifications, and AI validation.
+External service layer: APNs/FCM, LLM provider, analytics, and optional future payments.
+7. Suggested Domain Model
+The core entities should map directly to the PRD and the design document.
+Entity
+Purpose
+users
+Profile, auth identity, device tokens, preferences, notification settings
+houses
+House metadata, invite codes, owner/admin roles, active member count
+house_members
+User-house relationship, role, join date, status
+tasks
+Title, description, assignee, due date, recurrence, status, house reference
+task_occurrences
+Concrete generated instances for recurring tasks when needed
+expenses
+Title, amount, currency, payer, participants, split mode, category, timestamps
+balances
+Computed net positions per house or per member-pair, depending on implementation
+shopping_items
+Name, quantity, status, created by, purchased by
+chat_messages
+Message content, sender, timestamps, message type
+polls
+Question, options, vote counts, close state
+poll_votes
+Vote records per member
+ai_action_drafts
+Pending structured output returned by AI before user confirmation
+notification_events
+Server-side records for scheduled reminders and audit tracking
+8. Core Technical Flows
+8.1 Add Expense Flow
+User opens the Add Expense screen from a floating action button or home quick action.
+The form captures amount, payer, participants, and split mode.
+The app validates required fields locally for fast feedback.
+The backend function recalculates balances after persistence.
+The home screen and expense screen receive updated values in real time.
+8.2 Add Task Flow
+User creates a task with title, assignee, due date, and optional recurrence.
+Local validation runs instantly.
+The task is saved and returns to the dashboard through optimistic UI where safe.
+If recurring, the backend scheduler or recurrence engine prepares future instances.
+8.3 AI Quick Action Flow
+User enters a natural language instruction in a dedicated AI entry point or quick composer.
+The mobile app sends the request to a backend AI endpoint.
+The AI endpoint returns a structured draft action rather than a committed record.
+The app presents a confirmation card summarizing the interpreted action.
+The user confirms, edits, or rejects the draft.
+Only confirmed actions are persisted and broadcast to the house.
+8.4 Notification Flow
+A server-side event is created when a scheduled reminder or relevant action occurs.
+Cloud Functions determine recipients and notification content.
+The notification is sent through FCM/APNs to the correct device tokens.
+Tapping the notification deep-links the user into the correct screen and object context.
+9. Mobile UX and Performance Requirements
+Because ROOM-E is tightly linked to its design system, engineering should preserve the following mobile behavior standards.
+Cold start should be fast enough that users can reach the home dashboard without a perception of heaviness.
+The home screen should render skeleton cards first, then progressively fill tasks, balances, and shopping content.
+Forms such as Add Task and Add Expense should open as native-feeling modal sheets.
+Expensive calculations should not block animation or navigation.
+Lists should be virtualized and paginated where needed, especially for chat and expense history.
+Design tokens for spacing, corner radius, elevation, typography, and colors should be centralized in code to stay aligned with the design document.
+10. Offline and Low-Connectivity Strategy
+The app does not need to be fully offline-first in v1, but it should remain resilient under weak mobile connectivity. A practical strategy is local caching plus queued writes for selected actions.
+Cache the latest house summary, tasks, balances, and shopping items locally for quick reopen behavior.
+Allow some actions such as task completion or shopping item check-off to queue temporarily if the network is lost.
+Mark unsynced actions clearly if a write has not yet been acknowledged.
+Chat and financial writes should prefer strong confirmation so users do not duplicate entries.
+11. Notifications for Mobile
+11.1 Notification Types
+Task reminders: due today, due soon, recurring chore reminders
+Expense notifications: new shared expense, mention or request for confirmation
+Poll notifications: new poll, poll closing soon
+Chat notifications: mentions, important house announcements
+System notifications: invite accepted, member joined house
+11.2 Notification Principles
+Notifications must be relevant, not noisy; house products can become annoying quickly if overused.
+Each notification should have a clear deep-link destination.
+Users should be able to customize notification categories in settings.
+Quiet hours and digest options should be considered soon after v1 if early usage becomes high-frequency.
+12. AI Assistant Module
+The AI module should behave like a safe household command layer. It is not a fully autonomous assistant; it is a structured action helper.
+12.1 Supported v1 Intents
+Create expense
+Create task
+Answer simple product questions such as who paid the last internet bill or what tasks are due today, if permissions allow
+12.2 Example User Inputs
+"Add an internet expense of 80 dollars, paid by Daniel, split between the four of us."
+"Create a task for Laura to clean the bathroom this Friday."
+"Remind everyone tomorrow to buy toilet paper."
+12.3 Required Confirmation Pattern
+Every AI-generated write action should follow this UX pattern:
+System interpretation: show the detected action type.
+Structured summary: show fields such as title, amount, assignee, date, participants, and split mode.
+Editable confirmation: allow the user to fix any incorrect field before saving.
+Explicit save button: no background saving without approval.
+Success feedback: show confirmation toast or card after persistence.
+12.4 Safety and Quality Controls
+Reject ambiguous writes if key fields are missing.
+Use confidence thresholds and fallback clarification questions.
+Prevent duplicate writes from repeated submissions.
+Log AI parsing failures and user corrections so the product can improve over time.
+13. Security, Privacy, and Access Control
+Every record must be scoped to a house, and read/write permissions must be enforced at both the app and backend rule level.
+Only house members should access that house's tasks, expenses, shopping items, polls, and messages.
+Sensitive financial data should not be exposed to other houses or to unauthenticated requests.
+Authentication tokens and device tokens must be handled securely.
+AI requests should avoid sending unnecessary personal or financial context.
+14. Observability and Analytics
+Track activation milestones: account created, house created, roommate invited, first expense logged, first task completed.
+Track engagement events: task completion, expense creation, poll creation, chat usage, AI draft created, AI draft confirmed.
+Monitor technical quality: crash-free users, API latency, notification delivery success, AI parse success rate.
+Use these metrics to stay consistent with the success criteria defined in the PRD.
+15. API and Function Responsibilities
+Function / Service
+Responsibility
+createExpense
+Validate payload, write expense, recalculate balances, emit notification event
+createTask
+Validate task, persist task, configure recurrence or reminder hooks
+recalculateBalances
+Maintain canonical member balances after expense changes
+sendHouseNotification
+Create and deliver push notifications with correct targeting
+parseAiAction
+Call the LLM, normalize output, return draft action
+confirmAiAction
+Persist approved draft into the appropriate canonical record
+16. Release Strategy
+16.1 v1 Scope
+Account creation and onboarding
+House creation and invites
+Tasks with recurrence
+Expenses and balances
+Shopping list
+Chat and polls
+Push notifications
+AI-assisted task and expense creation with confirmation
+16.2 v1.1 / Near-Term Enhancements
+Receipt image upload and OCR-assisted expense entry
+Richer notification preferences
+Better AI clarifications and summaries
+Improved offline queueing
+Analytics dashboard for internal product monitoring
+17. Engineering Risks and Mitigations
+Risk
+Mitigation
+Real-time complexity across several modules
+Limit live listeners to the current house context and key screens; aggregate carefully on the home dashboard.
+Notification fatigue
+Add user-level controls early and only send meaningful events.
+AI misinterpretation
+Use confirmation cards, validation rules, and structured output.
+Balance errors
+Centralize expense calculation on trusted server-side logic and add automated tests.
+Slow dashboard rendering
+Use progressive loading, caching, and lightweight summary queries.
+18. Recommended Next Technical Deliverables
+Data model specification with field-level definitions
+API contract sheet for task, expense, chat, poll, and AI actions
+Notification matrix by trigger, audience, and deep-link destination
+iOS release checklist for App Store distribution
+Engineering roadmap in sprints aligned with the PRD and design document
+19. Conclusion
+The recommended ROOM-E technical direction is a mobile-first, App Store-ready architecture that is tightly aligned with both the PRD and the design document. It supports the current MVP cleanly, preserves design quality on iPhone, enables safe AI-assisted actions, and gives the product a realistic path to ship without overengineering the first release.

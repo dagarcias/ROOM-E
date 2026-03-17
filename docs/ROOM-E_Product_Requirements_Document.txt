@@ -1,0 +1,88 @@
+ROOM-E
+Product Requirements Document (PRD)
+1. Overview
+ROOM-E is a mobile application designed to improve coexistence among roommates by organizing household responsibilities, shared expenses, purchases, decisions, and communication in one place. The app provides a shared digital space called a 'House' where members can coordinate daily living.
+Mission
+Improve coexistence between roommates by organizing responsibilities, shared expenses, purchases, and house decisions in a single collaborative space.
+2. Problem Statement
+People living with roommates frequently face coordination problems due to lack of organization and transparency. Tasks, finances, and communication are often fragmented across different tools or handled informally, which leads to misunderstandings and conflicts.
+Key Problems
+Task ambiguity: roommates often do not know who is responsible for certain household duties.
+Financial confusion: shared expenses like internet, groceries, and utilities are difficult to track.
+Disorganized purchases: essential household items are forgotten or bought multiple times.
+Decision-making difficulty: group decisions lack structure and transparency.
+Fragmented communication: information gets lost in general messaging apps.
+3. Product Vision
+ROOM-E will function as a digital hub for shared living spaces. Each group of roommates creates a private 'House' where they manage tasks, expenses, purchases, decisions, and communication.
+4. Target Users
+Students living in shared apartments or dormitories.
+Young professionals sharing housing to reduce living costs.
+Temporary roommates such as interns, exchange students, or short-term renters.
+5. Core Product Concept
+The main entity in ROOM-E is the 'House'. A House is a shared digital environment where roommates coordinate responsibilities and finances.
+Each House Includes
+Members
+Task management
+Shared expenses
+Shopping lists
+Chat and polls
+6. MVP Features
+6.1 House Creation & Membership
+Users can create a house or join an existing one through an invitation link or code. Members of the house gain access to shared tools and information.
+6.2 Task Management
+Users can manage household responsibilities.
+Create tasks
+Assign responsible roommate
+Mark tasks as completed
+Repeat tasks weekly
+Automatic rotation of tasks among members
+6.3 Shared Expense Management
+Users can record expenses and divide them among roommates. The system automatically calculates each member’s share and updates balances.
+6.4 Balance Tracking
+The system maintains a ledger showing who owes money to whom based on recorded expenses.
+6.5 Shared Shopping List
+A collaborative shopping list allows roommates to add items, mark them as purchased, and optionally convert purchases into expenses.
+6.6 House Chat and Polls
+Each house includes a chat channel where roommates can communicate and create polls to make group decisions.
+7. Core User Flows
+Onboarding
+User installs the app
+Creates an account
+Creates or joins a house
+Invites roommates
+Adding an Expense
+User selects 'Add Expense'
+Inputs name, amount, payer, and participants
+System splits the expense
+Balances update automatically
+Completing a Task
+User views assigned tasks
+Marks task as completed
+If recurring, task resets for next cycle
+Creating a Poll
+User creates poll in house chat
+Members vote
+Results update in real time
+8. App Navigation
+Home – overview of balances, tasks, and shopping items.
+Tasks – manage and complete household responsibilities.
+Expenses – add expenses and view balances.
+Shopping – collaborative shopping list.
+Chat – house communication and polls.
+9. Non-Functional Requirements
+Performance: core screens load within two seconds.
+Security: only house members can access house data.
+Privacy: financial information is visible only to house members.
+Reliability: expense calculations must be accurate.
+10. Success Metrics
+Activation rate: percentage of users who create a house and invite roommates.
+Engagement: weekly active houses.
+Feature usage: tasks completed, expenses recorded, polls created.
+Retention: percentage of users active after 30 days.
+11. Future Features
+Receipt scanning to automatically detect expense amounts.
+Expense insights and spending analytics.
+AI assistant for task planning and budgeting.
+Payment integrations for direct settlements.
+12. Constraints
+The first version of ROOM-E should prioritize simplicity, fast onboarding, and a minimal learning curve. The MVP will focus strictly on core roommate coordination features.

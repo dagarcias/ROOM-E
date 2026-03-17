@@ -1,0 +1,456 @@
+ROOM-E
+Product Design Document
+UX/UI Direction, Wireframes, Design System, and User Flow Map
+Design intent
+ROOM-E should feel like a calm household command center with the speed of a delivery app. The visual language combines the clean dashboard clarity of modern task-management products with mobile commerce patterns inspired by Rappi: quick scanning, strong cards, fast actions, obvious hierarchy, and lightweight decision making.
+Version
+v1.0
+Language: English
+Scope: Mobile app
+Platform: iOS-first
+1. Executive Summary
+ROOM-E is a roommate coordination app built around one shared space: the House. The product brings together chores, shared expenses, shopping, chat, and polls into a single mobile experience that reduces friction in everyday co-living.
+This document defines the design direction for the product and consolidates four outputs in one handoff-ready artifact: core UX/UI direction, screen wireframes, design system foundations, and user flow maps.
+Reference synthesis
+Reference
+What it contributes
+How it translates to ROOM-E
+Task Management Mobile App
+Minimal dashboards, colored task cards, quick status scanning, lightweight information density.
+Use dashboard cards for Today, Balance, Shopping, and Polls. Keep modules visually distinct and scannable.
+Progressly – Add New Task
+Clean task creation flow, clear input hierarchy, modern form spacing, focused CTA placement.
+Use a dedicated full-screen task creation pattern with segmented selectors, date chips, and one primary action.
+Rappi mobile patterns
+Fast discovery, strong card hierarchy, obvious entry points, category chips, floating actions, and practical navigation.
+Use chips, quick actions, sticky utilities, and a home screen optimized for speed rather than deep browsing.
+Primary design goals
+• Make household coordination feel fast and low-friction.
+• Reduce ambiguity around money, tasks, and decisions.
+• Keep the app useful even when users open it for only a few seconds.
+• Present shared data in a way that avoids blame-heavy UX.
+Non-goals for v1
+• Detailed analytics dashboards.
+• Complex gamification or roommate scoring.
+• Heavy customization during onboarding.
+• Desktop-first behaviors or enterprise collaboration patterns.
+2. Product Experience Principles
+One-glance clarity
+Users should understand the state of the house in under 5 seconds from the Home screen.
+Fast action over deep navigation
+Adding a task, expense, or poll should be one obvious action away.
+Shared ownership, not surveillance
+The product should encourage coordination without feeling punitive.
+Operational calm
+Visual design should lower stress through structured spacing, soft surfaces, and controlled color use.
+Commerce-grade efficiency
+Borrow Rappi-like speed patterns where they improve discovery, prioritization, and repeat use.
+3. Information Architecture
+Primary tab
+Core job
+Key data
+Primary action
+Home
+Snapshot of house status
+Today’s tasks, balance summary, shopping items, active poll
+Quick add / Jump into a module
+Tasks
+Plan and complete household responsibilities
+Assigned tasks, recurring rules, due dates
+Add task / Complete task
+Expenses
+Track shared spending and balances
+Expense feed, who paid, who owes, simplified settlement
+Add expense
+Shopping
+Capture and close shared purchasing needs
+List items, bought state, convert to expense
+Add item
+Chat
+Coordinate and decide as a group
+Messages, pinned notes, polls, announcements
+Send message / Create poll
+Navigation model
+Bottom tab bar with 5 destinations: Home, Tasks, Expenses, Shopping, Chat.
+Contextual floating action button used only where creation is the dominant behavior.
+Top-level Home is not a feed; it is a command center with stacked cards and fast actions.
+Use chips and segmented controls for filtering instead of hidden settings menus.
+4. UX/UI Direction
+Overall visual tone
+ROOM-E should sit between productivity calm and everyday utility energy. The app should feel more premium and composed than a generic household utility, but more approachable and practical than a formal finance product.
+Use more of this
+Avoid this
+• Rounded cards with gentle elevation
+• Short section labels and high-contrast totals
+• Quick action chips and segmented filters
+• Selective use of color to signal priority or status
+• Comfortable whitespace with compact but not crowded rows
+• Dense spreadsheet-like layouts
+• Overly playful roommate scoring mechanics
+• Too many saturated colors on the same screen
+• Multi-step creation flows for simple actions
+• Chat-first layout that hides operational actions
+Rappi-inspired patterns to adopt
+• Card-led home composition for fast scanning.
+• Category chips for common actions and quick filtering.
+• Strong primary CTA placement for repeat behaviors.
+• Practical use of icons, badges, and counts to reduce reading effort.
+• Actionable surfaces: tapping a card should advance the task immediately.
+Rappi-inspired patterns to reinterpret carefully
+• Do not replicate commerce clutter; ROOM-E should stay calmer and more deliberate.
+• Avoid too many promotional surfaces or excessive banners.
+• Use urgency cues sparingly; household management is frequent but not always high-intensity.
+• Preserve trust by keeping expenses and balances simple and transparent.
+5. Screen Wireframes
+The following wireframes define structure and priority, not final pixel-perfect composition.
+5.1 Home Screen
+Goal: Give the user an instant operational summary of the House and the fastest path to action.
+Zone
+Content / behavior
+Top bar
+House name, member avatar stack, notifications, optional search / quick switch.
+Greeting + state
+Lightweight heading such as 'Today in Casa Palermo' and one-sentence status summary.
+Quick action chips
+Add task, Add expense, Add item, New poll. Chips should feel tappable and immediate.
+Balance card
+Who owes whom; only the top 1–3 balance insights, with a clear 'View all' affordance.
+Today’s tasks card
+Tasks due today with assignee, status badge, and swipe/one-tap complete.
+Shopping snapshot
+Pending list count plus top items; card opens full Shopping tab.
+Polls / decisions
+Active poll with vote progress and clear participation state.
+Bottom navigation
+Persistent 5-tab bar with Home active.
+5.2 Tasks Screen
+Goal: Help roommates see ownership quickly and complete chores with minimal friction.
+Zone
+Content / behavior
+Header
+Tasks title, current filter, optional sort icon.
+Filter chips
+All, Mine, Today, Weekly, Completed.
+Task list
+Card rows with title, assignee, recurrence, due date, and completion action.
+Status treatment
+Use color accents or badges for due today, upcoming, and done.
+FAB
+Primary floating action button for Add task.
+Secondary action
+Long press or swipe to edit, reassign, or snooze.
+5.3 Add New Task
+Goal: Create a task in a focused, confidence-building flow inspired by modern task apps.
+Zone
+Content / behavior
+Header
+Back, title 'New task', Save or primary CTA.
+Task title field
+Single high-priority text field with strong label hierarchy.
+Assignment row
+Select roommate using pill-style chips or avatars.
+Timing row
+Due date, recurrence, reminder, and optional category.
+House area tag
+Kitchen, Bathroom, General, Bills, Supplies, etc.
+Primary CTA
+Save task as the only strong action at the bottom.
+Behavior note
+Keep advanced settings collapsed or secondary.
+5.4 Expenses Screen
+Goal: Make spending and balances understandable without turning the app into an accounting tool.
+Zone
+Content / behavior
+Header
+Expenses title, month selector, optional filter.
+Balance summary
+Simplified settlement card showing net positions in plain language.
+Expense feed
+Merchant/title, amount, payer, participants, timestamp.
+Smart grouping
+Group by date or billing cycle to reduce clutter.
+Settle action
+Optional mark-as-settled or note action, if included in MVP.
+FAB
+Add expense.
+5.5 Add Expense
+Goal: Let a user record a shared cost in under 20 seconds.
+Zone
+Content / behavior
+Expense name
+Title or merchant field.
+Amount
+Large numeric field with currency awareness.
+Paid by
+Single selector for payer.
+Split between
+Multi-select roommates; equal split default, manual override optional.
+Category
+Bills, Groceries, Cleaning, Shared purchase, Other.
+Primary CTA
+Split expense.
+5.6 Shopping Screen
+Goal: Turn shared needs into a light operational list instead of a heavy grocery experience.
+Zone
+Content / behavior
+Header
+Shopping title, item count, optional bought filter.
+Quick add input
+Fast inline input at the top for recurring behavior.
+List rows
+Checkbox, item name, quantity if needed, added by, convert-to-expense action.
+Smart state
+Recently bought or recurring household items can appear as suggestions.
+Completion
+Mark as bought with immediate visual change and optional undo.
+5.7 Chat and Polls
+Goal: Create a reliable coordination layer for the House without replacing operational modules.
+Zone
+Content / behavior
+Thread header
+House chat title, members, pinned notes.
+Message feed
+Short message bubbles, system updates, and poll cards.
+Poll card
+Question, options, vote counts/progress, participation state.
+Input composer
+Message field with actions for photo, poll, announcement.
+System messages
+Task completed, expense added, item bought; visually lighter than user messages.
+6. Design System Foundations
+This system is intentionally compact. It is designed to support an MVP that still feels branded, coherent, and scalable.
+6.1 Color system
+Token
+Hex
+Role
+Usage note
+Primary / Indigo
+#5B6CFF
+Core brand and selection
+Primary buttons, active tabs, selected chips, emphasis states
+Accent / Coral
+#FF6B57
+Urgency and quick action energy
+FAB, highlights, badges, occasional CTA support
+Support / Teal
+#2CC6B8
+Positive and completed states
+Completed tasks, confirmations, successful settlements
+Surface / Light
+#F6F8FC
+App background
+Default page and card surroundings
+Surface / Card
+#FFFFFF
+Elevated content
+Cards, sheets, modal surfaces
+Text / Primary
+#28344A
+Body and labels
+Default content
+Text / Muted
+#667085
+Secondary information
+Metadata, supporting labels, inactive states
+Border / Soft
+#E5EAF5
+Structure
+Dividers, card borders, segmented controls
+6.2 Typography
+Display / screen titles: Aptos Display or SF Pro Display equivalent, 24–28 pt.
+Section headers: 18–20 pt semibold.
+Card titles: 15–17 pt semibold.
+Body text: 14–15 pt regular in the product UI.
+Metadata / helper text: 12–13 pt regular.
+Use bold for totals, ownership, and primary labels only.
+6.3 Spacing and layout
+Base spacing scale: 4, 8, 12, 16, 20, 24, 32.
+Primary screen side padding: 20 px.
+Vertical rhythm on stacked cards: 12–16 px.
+Card internal padding: 16 px default, 20 px for summary cards.
+Bottom navigation height should remain comfortable for thumb use.
+6.4 Shape, elevation, and motion
+Large cards: 20–24 px corner radius.
+Inputs and chips: 14–18 px radius.
+Use soft shadows sparingly; rely on surface contrast first.
+Animations should be short and practical: 150–220 ms for state changes.
+Completion interactions should feel tactile but not playful to the point of distraction.
+6.5 Core components
+Component
+Variants
+Guideline
+Summary cards
+Balance, Today, Shopping, Poll
+Large title + one dominant number or status + clear secondary action
+Task cards
+Default, due today, completed
+Single-row scanning with status badge and one primary action
+Expense rows/cards
+Feed row, grouped card
+Prioritize amount, payer, and participants over metadata
+Chips
+Filter, tag, quick action
+Keep labels short and states obvious
+FAB
+Task, Expense, Item
+Use only in modules where creation frequency is high
+Poll card
+Active, closed
+Results must be legible at a glance
+6.6 Accessibility baseline
+Meet WCAG-friendly contrast targets for body text and key controls.
+Do not rely on color alone for task or payment states; pair with labels or icons.
+Touch targets should be at least 44×44 pt.
+Ensure amounts, names, and status labels remain legible for quick household use.
+Use plain-language balance statements such as 'Mateo owes Daniel $30.'
+7. User Flow Map
+Flows are written as decision-oriented maps for product, design, and engineering alignment.
+7.1 Onboarding and House setup
+Desired outcome: A new user joins or creates a House with at least one roommate.
+Step
+User action
+System response / next state
+1
+Open app and sign up / log in
+User lands on a simple choice: Create a House or Join a House.
+2
+Choose Create or Join
+The app presents the appropriate form: house name, invite code, or shared link.
+3
+Invite roommates
+The app generates a shareable invite and confirms pending members.
+4
+Enter House
+Home screen is populated with starter empty states and recommended first actions.
+7.2 Add a task
+Desired outcome: A chore becomes visible, assigned, and trackable.
+Step
+User action
+System response / next state
+1
+Tap Add task from Home or Tasks
+New Task screen opens with focus on title field.
+2
+Enter task details
+Assignee, due date, recurrence, and category are selected.
+3
+Save task
+Task appears in the feed and relevant cards update immediately.
+4
+If recurring
+The system stores recurrence rule and prepares next occurrence after completion.
+7.3 Complete a task
+Desired outcome: A roommate closes a chore with minimal friction.
+Step
+User action
+System response / next state
+1
+Open Tasks or Home card
+Task list loads with current statuses.
+2
+Tap or swipe complete
+The system updates the task state and triggers lightweight confirmation.
+3
+Refresh summaries
+Today card, assignee state, and optional chat system update are refreshed.
+7.4 Add an expense
+Desired outcome: A shared payment becomes transparent and reflected in balances.
+Step
+User action
+System response / next state
+1
+Tap Add expense
+Expense form opens with amount focus.
+2
+Enter amount, payer, participants
+Default split is equal; user may override if allowed.
+3
+Submit
+System computes balances, updates expense feed, and refreshes summary cards.
+4
+Optional follow-up
+Chat can receive a light system notice such as 'Daniel added Internet – $120.'
+7.5 Add shopping item and convert to expense
+Desired outcome: A household need is captured and optionally tied to real spending.
+Step
+User action
+System response / next state
+1
+Add item inline or via FAB
+Shopping list updates immediately.
+2
+Mark item as bought
+Item moves to bought state with undo option.
+3
+Convert to expense if relevant
+The app pre-fills an expense flow using the item context.
+7.6 Create and vote on a poll
+Desired outcome: The House can make small decisions without leaving the app.
+Step
+User action
+System response / next state
+1
+Open Chat and tap New poll
+Poll composer opens.
+2
+Enter question and options
+Poll card preview is shown.
+3
+Publish
+Chat feed shows the active poll.
+4
+Roommates vote
+Results update in real time and poll state changes after closure.
+8. Screen Inventory and Prioritization
+Screen
+Priority
+Why it matters
+Design risk
+Home
+P0
+Primary daily entry point and product summary
+Could become cluttered if too many cards are stacked
+Tasks list
+P0
+Core roommate coordination value
+Needs excellent scan speed and ownership clarity
+Add task
+P0
+High-frequency creation flow
+Too many fields could hurt completion
+Expenses
+P0
+Major trust-driving module
+Balance logic must feel simple, not intimidating
+Add expense
+P0
+Critical repeated action
+Amount + split UI must be obvious
+Shopping
+P1
+Useful but should stay lightweight
+Can drift into grocery app complexity
+Chat + Polls
+P1
+Important coordination layer
+Must support communication without overpowering operations
+9. Recommendations for the First Visual Prototype
+Prototype only the P0 and P1 screens listed above; avoid exploring edge-case screens too early.
+Start with Home, Tasks, Add Task, Expenses, and Add Expense as the first cohesive set.
+Validate whether users understand balances and task ownership without explanation.
+Test card density on smaller iPhones before polishing micro-details.
+Keep the first prototype in Spanish or bilingual UI if that matches target users, but preserve this document as the English source of truth.
+10. Open Questions
+Should settlement be part of MVP or remain a later enhancement?
+Will the House support multiple shopping lists or a single shared list?
+Do polls remain inside Chat only, or also surface on Home when active?
+Should recurring task rotation be automatic in v1 or manual in the first release?
+Will notifications prioritize reminders, financial updates, or poll activity?
+11. Final Design Summary
+ROOM-E should differentiate itself by feeling organized like a task app, fast like a utility app, and human like a shared home tool. The strongest direction is not to imitate Rappi literally, but to borrow its best mobile behaviors: obvious actions, card-first scanning, and low-effort repetition.
+If executed well, the result will be a mobile product that feels practical enough for daily use, clear enough for shared trust, and distinct enough to stand out from generic roommate or task apps.
+Reference sources used for this design direction
+• Dribbble — Task Management Mobile App (July 2024).
+• Dribbble — Progressly: Task Management Mobile App [Add New Task] (November 2024).
+• Apple App Store — Rappi mobile app listing and screenshots/descriptions.
+• Supplementary public visual references discussing Rappi’s app structure.

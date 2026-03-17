@@ -1,0 +1,40 @@
+{
+  "expo": {
+    "name": "ROOM-E",
+    "slug": "ROOM-E",
+    "scheme": "roome",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/branding/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/branding/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#1E232E"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/branding/icon.png",
+        "backgroundColor": "#1E232E"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "@react-native-community/datetimepicker",
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/branding/icon.png",
+          "color": "#5B6CFF",
+          "sounds": []
+        }
+      ]
+    ]
+  }
+}
