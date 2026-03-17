@@ -28,12 +28,12 @@ export const createTaskSlice: StateCreator<
   })),
 
   deleteTask: (taskId) => set((state) => ({
-    tasks: state.tasks.filter(t => t.id !== taskId)
+    tasks: state.tasks.filter((t: Task) => t.id !== taskId)
   })),
 
   toggleTaskCompletion: (taskId) => set((state) => {
     let newTasks = [...state.tasks];
-    const taskIndex = newTasks.findIndex(t => t.id === taskId);
+    const taskIndex = newTasks.findIndex((t: Task) => t.id === taskId);
 
     if (taskIndex > -1) {
       const task = newTasks[taskIndex];
@@ -49,7 +49,7 @@ export const createTaskSlice: StateCreator<
         nextWeekDate.setDate(currentDueDate.getDate() + 7);
 
         // Check if next week's task already exists to prevent duplicates on toggle spam
-        const cloneExists = newTasks.some(t =>
+        const cloneExists = newTasks.some((t: Task) =>
           t.title === task.title &&
           t.assignee === task.assignee &&
           new Date(t.dueDate).toDateString() === nextWeekDate.toDateString()

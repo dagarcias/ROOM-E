@@ -5,10 +5,10 @@
     "scheme": "roome",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/branding/icon.png",
+    "icon": "./assets/branding/icon.png.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/branding/splash.png",
+      "image": "./assets/branding/splash.png.png",
       "resizeMode": "contain",
       "backgroundColor": "#1E232E"
     },
@@ -17,7 +17,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/branding/icon.png",
+        "foregroundImage": "./assets/branding/icon.png.png",
         "backgroundColor": "#1E232E"
       },
       "predictiveBackGestureEnabled": false
@@ -30,7 +30,7 @@
       [
         "expo-notifications",
         {
-          "icon": "./assets/branding/icon.png",
+          "icon": "./assets/branding/icon.png.png",
           "color": "#5B6CFF",
           "sounds": []
         }

@@ -1,6 +1,6 @@
 import { StateCreator } from 'zustand';
 import { ShoppingSection, Expense } from '../../types';
-import { StoreState } from '../useAppStore';
+import { StoreState } from '../types';
 
 const uid = () => Math.random().toString(36).substr(2, 9);
 const now = () => new Date().toISOString();

@@ -68,8 +68,7 @@ const mockInitialExpenses: Expense[] = [
   }
 ];
 
-// 1. Define the Combined State boundary
-export type StoreState = AuthSlice & HouseSlice & TaskSlice & ExpenseSlice & ShoppingSlice & ChatSlice & RecurringExpenseSlice;
+import { StoreState } from './types';
 
 // 2. Compose the store
 export const useAppStore = create<StoreState>()((set, get, api) => ({

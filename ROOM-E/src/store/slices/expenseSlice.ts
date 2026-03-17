@@ -1,6 +1,6 @@
 import { StateCreator } from 'zustand';
-import { Expense, Balance } from '../../types';
-import { StoreState } from '../useAppStore';
+import { Expense, Balance, User } from '../../types';
+import { StoreState } from '../types';
 
 export interface ExpenseSlice {
   expenses: Expense[];
@@ -31,9 +31,9 @@ export const createExpenseSlice: StateCreator<
     const { expenses, houseMembers } = get();
     // Initialize balances to 0
     let balances: Record<string, number> = {};
-    houseMembers.forEach(m => balances[m.id] = 0);
+    houseMembers.forEach((m: User) => balances[m.id] = 0);
 
-    expenses.forEach(exp => {
+    expenses.forEach((exp: Expense) => {
       // The payer gets credited (negative debt) for the total amount they paid
       if (balances[exp.payerId] !== undefined) {
         balances[exp.payerId] -= exp.amount;
@@ -42,7 +42,7 @@ export const createExpenseSlice: StateCreator<
       // The cost is split evenly among participants
       const splitAmount = exp.amount / exp.participantIds.length;
 
-      exp.participantIds.forEach(pId => {
+      exp.participantIds.forEach((pId: string) => {
         // Each participant owes their slice of the split
         if (balances[pId] !== undefined) {
           balances[pId] += splitAmount;

@@ -1,6 +1,17 @@
 import { StateCreator } from 'zustand';
 import { House, User } from '../../types';
-import { StoreState } from '../useAppStore'; // We will define this combined type
+import { StoreState } from '../types';
+import { createNewHouseEntity } from '../../utils/houseUtils';
+
+export interface HouseSlice {
+  currentHouseId: string | null;
+  houses: House[];
+  houseMembers: User[];
+  createHouse: (name: string) => void;
+  requestJoinHouse: (code: string) => 'success' | 'invalid' | 'already_in';
+  approveMember: (houseId: string, userId: string) => void;
+  resetHouseState: () => void;
+}
 
 export const createHouseSlice: StateCreator<
   StoreState,

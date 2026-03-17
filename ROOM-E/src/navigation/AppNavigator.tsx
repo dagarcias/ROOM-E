@@ -1,7 +1,7 @@
-import React from 'react';
 import { NavigationContainer, LinkingOptions } from '@react-navigation/native';
 import { useAppStore } from '../store/useAppStore';
 import { useNotifications } from '../hooks/useNotifications';
+import { useEffect } from 'react';
 
 // Navigators
 import { AuthNavigator } from './AuthNavigator';
@@ -42,11 +42,19 @@ const linking: LinkingOptions<any> = {
 };
 
 const AppContent = () => {
-  const { isAuthenticated, user, currentHouseId, houses } = useAppStore();
+  const { isAuthenticated, user, currentHouseId, houses, initializeAuth, sessionReady } = useAppStore();
+
+  useEffect(() => {
+    initializeAuth();
+  }, [initializeAuth]);
 
   // Mount notification infrastructure inside NavigationContainer
   // so the hook can call useNavigation safely.
   useNotifications();
+
+  if (!sessionReady) {
+    return null; // Could return a splash screen here
+  }
 
   const currentHouse = houses.find(h => h.id === currentHouseId);
   const currentUserMember = currentHouse?.members.find(m => m.userId === user?.id);
