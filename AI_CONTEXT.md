@@ -14,3 +14,7 @@ Este documento sirve como un registro persistente entre sesiones de chat para qu
 - Contiene arrays simulados para `Usuarios`, `Tareas` y `Gastos`.
 - Incluye getters dinámicos como `getBalances()` para cálculos matemáticos en tiempo real. 
 - Próximo gran paso técnico será migrar la persistencia de Zustand a **Firebase Firestore**.
+- CLAVE DE BASE DE DATOS SUPABASE: obePNifueruyEr8H
+
+
+
